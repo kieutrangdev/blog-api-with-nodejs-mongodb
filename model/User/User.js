@@ -60,4 +60,11 @@ const userSchema = new mongoose.Schema({
         }
     ]
 
+}, {
+    timestamps: true
 })
+
+// compile the user model
+const User = mongoose.model('User', userSchema)
+
+module.exports = User

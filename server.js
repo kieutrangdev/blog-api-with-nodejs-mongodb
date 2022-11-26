@@ -5,6 +5,12 @@ require('./config/dbConnect')
 
 const app = express()
 
+//routes
+//-----
+    // user router
+    // app.post('/api/v1/users/register')
+
+
 
 const PORT = process.env.PORT || 8080
 

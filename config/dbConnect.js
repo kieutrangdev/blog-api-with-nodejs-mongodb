@@ -1,6 +1,4 @@
 const mongoose = require('mongoose')
-
-
 // function to connect
 const dbConnect = async () => {
     try {
