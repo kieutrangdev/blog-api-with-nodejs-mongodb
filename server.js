@@ -8,6 +8,29 @@ dotenv.config();
 require("./config/dbConnect");
 const app = express();
 
+//middlewares
+app.use(express.json())
+
+// const userAuth = {
+//   isLogin: true,
+//   isAdmin: false
+// }
+
+// app.use((req, res, next ) => {
+//   if(userAuth.isLogin) {
+//     console.log('I was called')
+//     next()
+//   }
+//   else {
+//     return res.json({
+//       msg: "Invalid login"
+//     })
+//   }
+// })
+
+
+
+
 //routes
 //-----
 // user router
