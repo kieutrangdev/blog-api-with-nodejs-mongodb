@@ -1,50 +1,15 @@
 const express = require("express");
+const { cateCreateCtrl, cateGetCtrl, cateDeteleCtrl, cateUpdateCtrl } = require("../../controllers/categories/categoryController");
 
 const categoryRoutes = express.Router();
 // category
 
-categoryRoutes.post("", async (req, res) => {
-  try {
-    res.json({
-      status: "success",
-      data: "categories created",
-    });
-  } catch (error) {
-    res.json(error.message);
-  }
-});
+categoryRoutes.post("", cateCreateCtrl);
 
-categoryRoutes.get("/:id", async (req, res) => {
-  try {
-    res.json({
-      status: "success",
-      data: "categories route",
-    });
-  } catch (error) {
-    res.json(error.message);
-  }
-});
+categoryRoutes.get("/:id", cateGetCtrl);
 
-categoryRoutes.delete("/:id", async (req, res) => {
-  try {
-    res.json({
-      status: "success",
-      data: "categories delete",
-    });
-  } catch (error) {
-    res.json(error.message);
-  }
-});
+categoryRoutes.delete("/:id", cateDeteleCtrl);
 
-categoryRoutes.put("/:id", async (req, res) => {
-  try {
-    res.json({
-      status: "success",
-      data: "categories update",
-    });
-  } catch (error) {
-    res.json(error.message);
-  }
-});
+categoryRoutes.put("/:id", cateUpdateCtrl);
 
 module.exports = categoryRoutes;

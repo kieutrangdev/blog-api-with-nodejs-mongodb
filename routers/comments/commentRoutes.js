@@ -1,18 +1,10 @@
 const express = require("express");
+const { commentCreateCtrl } = require("../../controllers/comments/commentController");
 
 const commentRoutes = express.Router();
 
 // comments route
-commentRoutes.post("/", async (req, res) => {
-  try {
-    res.json({
-      status: "success",
-      data: "comment created",
-    });
-  } catch (error) {
-    res.json(error.message);
-  }
-});
+commentRoutes.post("/", commentCreateCtrl);
 
 commentRoutes.get("/:id", async (req, res) => {
   try {
