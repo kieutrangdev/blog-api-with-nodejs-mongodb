@@ -1,22 +1,19 @@
 const bcrypt = require("bcryptjs");
 const User = require("../../model/User/User");
-const { use } = require("../../routers/users/userRoutes");
-
-const userRegisterCtrl = async (req, res) => {
+const {appErr, AppErr} = require("../../utils/appErr");
+const generateToken = require("../../utils/generateToken");
+const getTokenFromHeader = require("../../utils/getTokenFromHeaders");
+const userRegisterCtrl = async (req, res, next) => {
   const { firstName, lastName, profilePhoto, email, password } = req.body;
   try {
     //check if email exist
     const userFound = await User.findOne({ email });
     if (userFound) {
-      return res.json({
-        msg: "User Alread Exist",
-      });
+      return next(new AppErr("User Already Exist", 500))
     }
-
     //hash password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-
     //create the user
     const user = await User.create({
       firstName,
@@ -30,10 +27,9 @@ const userRegisterCtrl = async (req, res) => {
       data: user,
     });
   } catch (error) {
-    res.json(error.message);
+    next(appErr(error.message));
   }
 };
-
 const userLoginCtrl = async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -59,7 +55,13 @@ const userLoginCtrl = async (req, res) => {
     }
     res.json({
       status: "success",
-      data: userFound,
+      data: {
+        firstName: userFound.firstName,
+        lastName : userFound.lastName,
+        email: userFound.email,
+        isAdmin: userFound.isAdmin,
+        token: generateToken(userFound.id)
+      },
     });
   } catch (error) {
     res.json(error.message);
@@ -78,9 +80,9 @@ const userGetCtrl = async (req, res) => {
 };
 
 const userProfileCtrl = async (req, res) => {
-  const {id} = req.params 
   try {
-    const user = await User.findById(id)
+    // get token from header
+    const user = await User.findById(req.userAuth)
     res.json({
       status: "success",
       data: user,

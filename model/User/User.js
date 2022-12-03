@@ -4,22 +4,22 @@ const mongoose = require('mongoose')
 const userSchema = new mongoose.Schema({
     firstName: {
         type: String,
-        require: [true, 'First Name is require']
+        required: [true, 'First Name is require']
     },
     lastName: {
         type: String,
-        require: [true, 'Last Name is require']
+        required: [true, 'Last Name is require']
     },
     profilePhoto: {
         type: String,
     },
     email: {
         type: String,
-        require: [true, 'Email is require']
+        required: [true, 'Email is require']
     },
     password: {
         type: String,
-        require: [true, 'Password is require']
+        required: [true, 'Password is require']
     },
     postCount: {
         type: Number,
